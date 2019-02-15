@@ -9,18 +9,17 @@
         <input type='text' />
       </div>
     </div>
-    <div class='row'
-         *ngIf='listFilter'>
+    <div class='row' *ngIf='listFilter'>
       <div class='col-md-6'>
         <h4>Filtered by: {{listFilter}}</h4>
       </div>
     </div>
     <div class='table-responsive'>
-      <table class='table'>
+      <table class='table' *ngIf='listProducts && listProducts.length'>
         <thead>
           <tr>
             <th>
-              <button class='btn btn-primary'>
+              <button class='btn btn-primary' (click)='togleImage()'>
                 mostrar img
               </button>
             </th>
@@ -32,13 +31,22 @@
           </tr>
         </thead>
         <tbody>
-
+          <tr *ngFor='let prod of listProducts'>
+            <td>
+              <img *ngIf="showImage" [src]="prod.imageUrl" [title]="prod.productName"
+              [style.width.px]="imageWidth" [style.margin.px]="imageMargin">
+            </td>
+            <td>{{ prod.productName }}</td>
+            <td>{{ prod.productCode }}</td>
+            <td>{{ prod.releaseDate }}</td>
+            <td>{{ prod.price }}</td>
+            <td>{{ prod.starRating }}</td>
+          </tr>
         </tbody>
       </table>
     </div>
   </div>
 </div>
-<div *ngIf='errorMessage'
-     class='alert alert-danger'>
+<div *ngIf='errorMessage' class='alert alert-danger'>
   Error: {{ errorMessage }}
 </div>
