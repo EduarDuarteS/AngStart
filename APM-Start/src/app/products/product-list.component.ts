@@ -94,5 +94,7 @@ constructor(){
     return this.listProducts.filter((productWithFilter:IProduct)=>
     productWithFilter.productName.toLowerCase().indexOf(valueFilter) !== -1 )
   }
-
+  onClickDesplegaInfo(message: string):void{
+this.pageTitle = 'Product List: '+ message;
+  }
 }
