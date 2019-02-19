@@ -11,6 +11,7 @@ export class ProductListComponent implements OnInit{
   pageTitle: string = 'Product List Ed';
   imageWidth: number = 50;
   imageMargin: number = 2;
+  errorMessage: string;
   showImage: boolean = false;
   //listFiltrado: string = 'cart';
   _listFilter: string;
@@ -28,15 +29,20 @@ export class ProductListComponent implements OnInit{
 
   listProducts: IProduct [];
 
-constructor(private productService : ProductService){
-}
+  constructor(private productService : ProductService){
+  }
 
   togleImage():void{
     this.showImage = !this.showImage;
   }
   ngOnInit():void{
-    this.listProducts = this.productService.getProducts();
-    this.filteredProducts = this.listProducts;
+    this.productService.getProducts().subscribe(
+      listProducts => {
+        this.listProducts = listProducts;
+        this.filteredProducts = this.listProducts;
+      },
+      error => this.errorMessage = <any>error
+    );
     console.log('OnInit execute')
   }
 
@@ -46,6 +52,6 @@ constructor(private productService : ProductService){
     productWithFilter.productName.toLowerCase().indexOf(valueFilter) !== -1 )
   }
   onClickDesplegaInfo(message: string):void{
-this.pageTitle = 'Product List: '+ message;
+    this.pageTitle = 'Product List: '+ message;
   }
 }
